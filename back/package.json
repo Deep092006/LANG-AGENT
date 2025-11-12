@@ -1,0 +1,29 @@
+{
+  "name": "lang-agent",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.13.1",
+  "dependencies": {
+    "@langchain/community": "^1.0.0",
+    "@langchain/core": "^1.0.2",
+    "@langchain/google-genai": "^1.0.0",
+    "@langchain/langgraph": "^1.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "langchain": "^1.0.2",
+    "multer": "^2.0.2",
+    "n8n": "^1.117.3",
+    "sqlite3": "^5.1.7",
+    "vectorstore": "link:@langchain/community/vectorstore",
+    "zod": "^4.1.12"
+  }
+}
