@@ -3,6 +3,7 @@ import { ChatPromptValue } from "@langchain/core/prompt_values";
 import { Chatmodel } from "../utils/Llm.js"; // 🚀 Pre-configured LLM instance (Google/ChatGPT, etc.)
 import { AIMessage, HumanMessage } from "langchain";
 import { configDotenv } from "dotenv";
+import * as z from "zod";
 configDotenv();
 
 // ─────────────────────────────────────────────────────────────
@@ -38,8 +39,14 @@ const refineTweetPrompt = ChatPromptTemplate.fromMessages([
 // ─────────────────────────────────────────────────────────────
 // ⚙️ Core Logic: Generation + Refinement
 // ─────────────────────────────────────────────────────────────
-
+const refine = z.object({
+    focus: z.string().describe("The focus of the refinement."),
+    hashtang: z.array(z.string()).describe("The hashtag of the post.."),
+    suggetion: z.array(z.string()).describe("all post refinements suggetion"),
+});
 // 🪶 Step 1: Generate a tweet from user input
+const gn = Chatmodel.withStructuredOutput(refine)
+const gm = Chatmodel.withStructuredOutput(refine)
 export const generateTweet = async (messages) => {
   const input = { messages };
   const promptValue = await generateTweetPrompt.formatPromptValue(input);
@@ -49,8 +56,20 @@ export const generateTweet = async (messages) => {
 
 // 🔁 Step 2: Refine or review the tweet with actionable feedback
 export const refineTweet = async (messages) => {
+  console.log("called");
+
   const input = { messages };
   const promptValue = await refineTweetPrompt.formatPromptValue(input);
-  const response = await Chatmodel.invoke(promptValue);
-  return new HumanMessage(response.content); // 💬 Feedback returned as Human message
+
+  const response = await gn.invoke(promptValue);
+  console.log(response, "dcfc"); // logs structured object
+
+  // Convert structured object into readable text
+  const text = `Focus: ${response.focus}\nHashtags: ${response.hashtang.join(", ")}\nSuggestions:\n- ${response.suggetion.join("\n- ")}`;
+
+  return new HumanMessage(text);
 };
+
+console.log(await refineTweet([
+  new AIMessage("I love programming in JavaScript! #coding #JavaScript"),
+]));

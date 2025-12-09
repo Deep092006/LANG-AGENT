@@ -1,13 +1,12 @@
 // ⚙️ Environment Setup
 import { configDotenv } from "dotenv";
 configDotenv();
-
 // 🧠 Import AI Model
 import { Chatmodel } from "./utils/Llm.js";
 
 // 🌐 LangChain Imports
 import { WikipediaQueryRun } from "@langchain/community/tools/wikipedia_query_run";
-import { AIMessage, createAgent, tool } from "langchain";
+import { AIMessage, createAgent, tool, toolStrategy } from "langchain";
 import * as z from "zod";
 
 // 🚀 Express Server Setup
@@ -50,10 +49,18 @@ const weatherTool = tool(
   }
 );
 
+const ProductReview = z.object({
+    rating: z.number().min(1).max(5),
+    sentiment: z.enum(["positive", "negative"]),
+    keyPoints: z.array(z.string()).describe("The key points of the review. Lowercase, 1-3 words each."),
+});
+
 // 🤖 Create AI Agent
 const agent = createAgent({
   model: Chatmodel,
-  tools: [wikiTool, weatherTool],  // 🧰 Attach tools
+  tools: [wikiTool, weatherTool],
+  responseFormat:toolStrategy(ProductReview),
+  maxOutputTokens: 200,
 });
 
 // 💬 Query the Agent
@@ -61,7 +68,7 @@ const responseStream = await agent.stream({
   messages: [
     {
       role: "user", // 👤 User role
-      content: "Who is Mark Zuckerberg?",
+      content: "kgf",
     },
   ],
 });

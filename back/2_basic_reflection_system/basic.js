@@ -44,10 +44,11 @@ console.log(compiledGraph.getGraph().drawMermaid());
 // ─────────────────────────────────────────────────────────────
 // 🧪 Test Run (optional)
 // ─────────────────────────────────────────────────────────────
-const result = await compiledGraph.stream(
+  const result =await compiledGraph.stream(
   new HumanMessage("Write a tweet about dsa vs ai vs dev")
-);
+  )
 
-for await (const chunk of result) {
-  console.log(chunk); // 🧩 Logs each streamed chunk of response
+  for await (const chunk of result) {
+ console.log(chunk);
+ 
 }
