@@ -4,6 +4,6 @@ configDotenv()
 
 // 💬 Initialize Gemini chat model
 export const Chatmodel = new ChatGoogleGenerativeAI({
-  model: "gemini-2.0-flash", // 🧠 Model version
+  model: "gemini-2.5-flash", // 🧠 Model version
   maxOutputTokens: 2048,     // 🔢 Max tokens in response
 });

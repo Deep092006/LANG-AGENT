@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@google/genai':
+        specifier: ^1.32.0
+        version: 1.32.0(@modelcontextprotocol/sdk@1.15.1)
       '@langchain/community':
         specifier: ^1.0.0
         version: 1.0.0(4054a3de1e96258e512b5798e6141f59)
@@ -748,6 +751,15 @@ packages:
     engines: {node: '>=20.0.0'}
     peerDependencies:
       '@modelcontextprotocol/sdk': ^1.11.4
+    peerDependenciesMeta:
+      '@modelcontextprotocol/sdk':
+        optional: true
+
+  '@google/genai@1.32.0':
+    resolution: {integrity: sha512-46vaEaHAThIBlqWFTti1fo3xYU6DwCOwnIIotLhYUbNha90wk5cZL79zdf+NoAfKVsx4DPmjCtXvbQNNVPl5ZQ==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      '@modelcontextprotocol/sdk': ^1.24.0
     peerDependenciesMeta:
       '@modelcontextprotocol/sdk':
         optional: true
@@ -9371,6 +9383,17 @@ snapshots:
     transitivePeerDependencies:
       - bufferutil
       - encoding
+      - supports-color
+      - utf-8-validate
+
+  '@google/genai@1.32.0(@modelcontextprotocol/sdk@1.15.1)':
+    dependencies:
+      google-auth-library: 10.5.0
+      ws: 8.18.3
+    optionalDependencies:
+      '@modelcontextprotocol/sdk': 1.15.1
+    transitivePeerDependencies:
+      - bufferutil
       - supports-color
       - utf-8-validate
 
